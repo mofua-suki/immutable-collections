@@ -1,0 +1,18 @@
+name: immutable_collections
+description: Read-only Dart collections with value equality.
+version: 0.1.0
+repository: https://github.com/sakamoto711/immutable-collections
+topics:
+  - collections
+  - immutability
+  - value-equality
+
+environment:
+  sdk: '>=3.14.0 <4.0.0'
+
+dependencies:
+  equatable: ^2.1.0
+  meta: ^1.19.0
+
+dev_dependencies:
+  test: ^1.32.0
