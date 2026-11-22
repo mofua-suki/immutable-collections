@@ -1,4 +1,4 @@
-name: immutable_collections
+name: frozen_collections
 description: Read-only Dart collections with value equality.
 version: 0.1.0
 repository: https://github.com/mofua-suki/immutable-collections

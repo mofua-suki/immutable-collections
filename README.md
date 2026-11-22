@@ -1,5 +1,7 @@
 # Immutable Collections
 
+pub.dev でのパッケージ名は `frozen_collections` です。
+
 Read-only snapshots of Dart lists, sets, and maps with value equality. These
 types are useful for application state, configuration, and other values that
 should stay stable when the source collection changes.
@@ -7,7 +9,7 @@ should stay stable when the source collection changes.
 ## Take a snapshot and edit a copy
 
 ```dart
-import 'package:immutable_collections/immutable_collections.dart';
+import 'package:frozen_collections/frozen_collections.dart';
 
 void main() {
   final source = ['coffee', 'tea'];

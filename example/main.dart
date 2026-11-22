@@ -1,4 +1,4 @@
-import 'package:immutable_collections/immutable_collections.dart';
+import 'package:frozen_collections/frozen_collections.dart';
 
 void main() {
   final source = ['coffee', 'tea'];
