@@ -1,6 +1,6 @@
 name: frozen_collections
-description: Read-only Dart collections with value equality.
-version: 0.1.0
+description: Immutable snapshots of Dart lists, sets, and maps with content-based equality and helpers to convert to and from mutable collections.
+version: 0.1.1
 repository: https://github.com/mofua-suki/immutable-collections
 topics:
   - collections
@@ -11,7 +11,7 @@ environment:
   sdk: '>=3.14.0 <4.0.0'
 
 dependencies:
-  equatable: ^2.1.0
+  equatable: '>=2.1.0 <4.0.0'
   meta: ^1.19.0
 
 dev_dependencies:

@@ -195,6 +195,12 @@ class ImmutableList<E>(List<E> list) with Equatable, _ImmutableListMixin<E> {
   List<E> toMutable() => List.from(_internal);
 
   @override
+  String toString() {
+    if (stringify ?? EquatableConfig.stringify) return super.toString();
+    return '$runtimeType';
+  }
+
+  @override
   List<Object?> get props => [_internal];
 
   @override
