@@ -72,12 +72,6 @@ class ImmutableMap<K, V>(Map<K, V> map)
   Map<K, V> toMutable() => Map.from(_internal);
 
   @override
-  String toString() {
-    if (stringify ?? EquatableConfig.stringify) return super.toString();
-    return '$runtimeType';
-  }
-
-  @override
   List<Object?> get props => [_internal];
 
   @override
