@@ -1,4 +1,4 @@
-# immutable_collections
+# Immutable Collections
 
 Read-only snapshots of Dart lists, sets, and maps with value equality. These
 types are useful for application state, configuration, and other values that
