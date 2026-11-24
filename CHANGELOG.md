@@ -1,3 +1,7 @@
+## 0.1.2
+
+- Document compile-time errors for in-place changes to immutable collections.
+
 ## 0.1.1
 
 - Support Equatable 3 while keeping compatibility with Equatable 2.1.
