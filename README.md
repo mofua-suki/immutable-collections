@@ -6,6 +6,11 @@ Read-only snapshots of Dart lists, sets, and maps with value equality. These
 types are useful for application state, configuration, and other values that
 should stay stable when the source collection changes.
 
+**In-place changes to an immutable collection are compile-time errors.**
+`ImmutableList` and `ImmutableSet` expose no `add()`, `remove()`, or `clear()`
+methods, and `ImmutableMap` exposes no `remove()`, `clear()`, or `[]=` operator.
+Use `toMutable()` to make an editable copy.
+
 ## Take a snapshot and edit a copy
 
 ```dart
@@ -14,6 +19,8 @@ import 'package:frozen_collections/frozen_collections.dart';
 void main() {
   final source = ['coffee', 'tea'];
   final drinks = source.toImmutable();
+  // drinks.add('juice');  // Compile-time error: ImmutableList has no add().
+  // drinks.remove('tea'); // Compile-time error: ImmutableList has no remove().
   source.add('water');
 
   print(drinks.toList()); // [coffee, tea]
