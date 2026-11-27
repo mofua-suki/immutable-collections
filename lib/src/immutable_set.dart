@@ -134,10 +134,18 @@ mixin _ImmutableSetMixin<E> implements Iterable<E> {
 /// The wrapper is an [Iterable]. Set operations such as [union] return Dart
 /// sets. Use [toMutable] for a detached, writable copy of this snapshot.
 @immutable
-class ImmutableSet<E>(Set<E> set) with Equatable, _ImmutableSetMixin<E> {
-  final _internal = Set<E>.unmodifiable(set);
+class ImmutableSet<E> with Equatable, _ImmutableSetMixin<E> {
+  final Set<E> _internal;
 
-  this;
+  /// Copies [set], throwing [ArgumentError] if source elements collapse
+  /// under the snapshot’s value equality.
+  ImmutableSet(Set<E> set) : _internal = Set<E>.unmodifiable(set) {
+    if (_internal.length != set.length) {
+      throw ArgumentError(
+        "Distinct source elements compare equal in the snapshot.",
+      );
+    }
+  }
 
   /// Creates an empty snapshot of members of type [E].
   factory ImmutableSet.empty() => ImmutableSet(<E>{});

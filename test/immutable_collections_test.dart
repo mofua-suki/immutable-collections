@@ -1,6 +1,17 @@
 import "package:frozen_collections/frozen_collections.dart";
 import "package:test/test.dart";
 
+class _Key {
+  final int value;
+  _Key(this.value);
+
+  @override
+  bool operator ==(Object other) => other is _Key && value == other.value;
+
+  @override
+  int get hashCode => value.hashCode;
+}
+
 void main() {
   group("ImmutableList", () {
     test("captures the input at conversion time", () {
@@ -35,6 +46,20 @@ void main() {
   });
 
   group("ImmutableSet", () {
+    test("rejects identity elements merged by value equality", () {
+      final input = Set<_Key>.identity()..addAll([_Key(1), _Key(1)]);
+      expect(input.length, 2);
+      expect(() => ImmutableSet(input), throwsArgumentError);
+      expect(() => input.toImmutable(), throwsArgumentError);
+    });
+
+    test("copies distinct identity elements in order with value lookup", () {
+      final input = Set<_Key>.identity()..addAll([_Key(2), _Key(1)]);
+      final snapshot = input.toImmutable();
+      expect(snapshot.toList(), input.toList());
+      expect(snapshot.contains(_Key(1)), isTrue);
+    });
+
     test("captures the input at conversion time", () {
       final input = {1, 2};
       final immutable = input.toImmutable();
@@ -67,6 +92,24 @@ void main() {
   });
 
   group("ImmutableMap", () {
+    test("rejects identity keys merged by value equality", () {
+      final input = Map<_Key, int>.identity()
+        ..[_Key(1)] = 10
+        ..[_Key(1)] = 20;
+      expect(input.length, 2);
+      expect(() => ImmutableMap(input), throwsArgumentError);
+      expect(() => input.toImmutable(), throwsArgumentError);
+    });
+
+    test("copies distinct identity keys in order with value lookup", () {
+      final input = Map<_Key, int>.identity()
+        ..[_Key(2)] = 20
+        ..[_Key(1)] = 10;
+      final snapshot = input.toImmutable();
+      expect(snapshot.keys.toList(), input.keys.toList());
+      expect(snapshot[_Key(1)], 10);
+    });
+
     test("captures the input at conversion time", () {
       final input = {"a": 1, "b": 2};
       final immutable = input.toImmutable();
