@@ -12,8 +12,46 @@ class _Key {
   int get hashCode => value.hashCode;
 }
 
+class _TaggedList extends ImmutableList<int> {
+  _TaggedList(this.tag) : super([1]);
+
+  final String tag;
+
+  @override
+  List<Object?> get props => [...super.props, tag];
+}
+
 void main() {
   group("ImmutableList", () {
+    test("compares nested elements using their own equality", () {
+      final item = [1];
+      final left = ImmutableList<Object>([item, _Key(2)]);
+      final equal = ImmutableList<Object>([item, _Key(2)]);
+      expect(left == equal, isTrue);
+      expect(equal == left, isTrue);
+      expect(left.hashCode, equal.hashCode);
+      for (final otherItem in <Object>[
+        [1],
+        {1},
+      ]) {
+        final other = ImmutableList<Object>([otherItem, _Key(2)]);
+        expect(left.contains(otherItem), isFalse);
+        expect(left == other, isFalse);
+        expect(other == left, isFalse);
+      }
+    });
+
+    test("retains runtime type and subclass equality properties", () {
+      final tagged = _TaggedList("a");
+      final equal = _TaggedList("a");
+      expect(tagged.props.first, isA<List<int>>());
+      expect(tagged == equal, isTrue);
+      expect(tagged.hashCode, equal.hashCode);
+      expect(tagged == _TaggedList("b"), isFalse);
+      expect(tagged == ImmutableList([1]), isFalse);
+      expect(ImmutableList<num>([1]) == ImmutableList<int>([1]), isFalse);
+    });
+
     test("captures the input at conversion time", () {
       final input = [1, 2];
       final immutable = input.toImmutable();
@@ -46,6 +84,24 @@ void main() {
   });
 
   group("ImmutableSet", () {
+    test("matches nested members by lookup in both directions", () {
+      final first = [1];
+      final second = [1];
+      final left = ImmutableSet({first, second});
+      final right = ImmutableSet({
+        first,
+        [2],
+      });
+      final reordered = ImmutableSet({second, first});
+
+      expect(right.lookup(second), isNull);
+      expect(left == right, isFalse);
+      expect(right == left, isFalse);
+      expect(left == reordered, isTrue);
+      expect(reordered == left, isTrue);
+      expect(left.hashCode, reordered.hashCode);
+    });
+
     test("rejects identity elements merged by value equality", () {
       final input = Set<_Key>.identity()..addAll([_Key(1), _Key(1)]);
       expect(input.length, 2);
@@ -92,6 +148,34 @@ void main() {
   });
 
   group("ImmutableMap", () {
+    test("compares nested keys and nullable values by lookup", () {
+      final key = [1];
+      final value = {2};
+      final left = ImmutableMap<Object, Object?>({key: null, "v": value});
+      final equal = ImmutableMap<Object, Object?>({"v": value, key: null});
+      expect(left == equal, isTrue);
+      expect(equal == left, isTrue);
+      expect(left.hashCode, equal.hashCode);
+      for (final entries in <Map<Object, Object?>>[
+        {
+          [1]: null,
+          "v": value,
+        },
+        {
+          key: null,
+          "v": {2},
+        },
+        {
+          key: null,
+          "v": [2],
+        },
+      ]) {
+        final other = ImmutableMap(entries);
+        expect(left == other, isFalse);
+        expect(other == left, isFalse);
+      }
+    });
+
     test("rejects identity keys merged by value equality", () {
       final input = Map<_Key, int>.identity()
         ..[_Key(1)] = 10

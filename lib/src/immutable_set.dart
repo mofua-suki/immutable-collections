@@ -1,5 +1,8 @@
+import "package:collection/collection.dart";
 import "package:equatable/equatable.dart";
 import "package:meta/meta.dart";
+
+import "snapshot_property.dart";
 
 /// イミュータブルなSetの振る舞いを提供するmixin
 /// 読み取り専用のメソッドのみを公開する([Set]は実装しない)
@@ -159,6 +162,19 @@ class ImmutableSet<E> with Equatable, _ImmutableSetMixin<E> {
 
   @override
   List<Object?> get props => [_internal];
+
+  Equatable _comparisonProps() =>
+      snapshotComparison(_internal, const SetEquality<Object?>(), props);
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is ImmutableSet<E> &&
+          runtimeType == other.runtimeType &&
+          _comparisonProps() == other._comparisonProps();
+
+  @override
+  int get hashCode => Object.hash(runtimeType, _comparisonProps());
 
   @override
   bool? get stringify => true;

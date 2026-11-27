@@ -1,3 +1,7 @@
+## 0.1.5
+
+- Compare elements, map keys, and map values using their own equality and hash codes, including nested collections.
+
 ## 0.1.4
 
 - Throw `ArgumentError` when copying a map or set would merge distinct keys or elements under default equality.
