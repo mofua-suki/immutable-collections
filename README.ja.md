@@ -12,8 +12,9 @@ Dart のリスト、セット、マップを、内容で等価性を判定でき
 dart pub add frozen_collections
 ```
 
-**スナップショットを直接変更する操作はコンパイルエラーになります。**
-`ImmutableList` と `ImmutableSet` には `add()`、`remove()`、`clear()` がなく、`ImmutableMap` には `remove()`、`clear()`、代入演算子 `[]=` がありません。`toMutable()` で編集用のコピーを作れます。
+**静的な型がラッパー型のとき、ラッパーを直接変更する操作はコンパイルエラーになります。**
+`ImmutableList` と `ImmutableSet` には `add()`、`remove()`、`clear()` がなく、`ImmutableMap` には `remove()`、`clear()`、代入演算子 `[]=` がありません。
+`internal` や `cast()` が返す不変ビューの型は Dart 標準のコレクション型です。これらのビューで `clear()` などを呼ぶと、実行時に `UnsupportedError` が発生します。`toMutable()` で編集用のコピーを作れます。
 
 ## スナップショットを作り、コピーを編集する
 

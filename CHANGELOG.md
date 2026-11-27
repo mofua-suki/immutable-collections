@@ -1,3 +1,7 @@
+## 0.1.6
+
+- Clarify when mutations are rejected on wrappers and unmodifiable views, and how key lookup works on an `ImmutableMap.cast()` view.
+
 ## 0.1.5
 
 - Compare elements, map keys, and map values using their own equality and hash codes, including nested collections.
