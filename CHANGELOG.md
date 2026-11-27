@@ -1,3 +1,7 @@
+## 0.1.4
+
+- Throw `ArgumentError` when copying a map or set would merge distinct keys or elements under default equality.
+
 ## 0.1.3
 
 - Add a Japanese README and document the SDK requirement and installation command.

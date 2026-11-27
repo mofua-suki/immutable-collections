@@ -55,11 +55,16 @@ mixin _ImmutableMapMixin<K, V> {
 /// still shared with the source, so keep keys' equality and hashes stable.
 /// Iterate through [entries], or call [toMutable] for a detached writable map.
 @immutable
-class ImmutableMap<K, V>(Map<K, V> map)
-    with Equatable, _ImmutableMapMixin<K, V> {
-  final _internal = Map<K, V>.unmodifiable(map);
+class ImmutableMap<K, V> with Equatable, _ImmutableMapMixin<K, V> {
+  final Map<K, V> _internal;
 
-  this;
+  /// Copies [map], throwing [ArgumentError] if source keys collapse under
+  /// the snapshot’s value equality.
+  ImmutableMap(Map<K, V> map) : _internal = Map<K, V>.unmodifiable(map) {
+    if (_internal.length != map.length) {
+      throw ArgumentError("Distinct source keys compare equal in the snapshot.");
+    }
+  }
 
   /// Creates an empty snapshot with keys of type [K] and values of type [V].
   factory ImmutableMap.empty() => ImmutableMap(<K, V>{});

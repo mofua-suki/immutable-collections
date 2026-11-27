@@ -85,6 +85,8 @@ stable when using an immutable wrapper as a map key or set member.
   an ordinary transformed map. Call `toImmutable()` on these results when you
   want another immutable snapshot.
 
+Map and set snapshots use ordinary key or element equality (`==` and `hashCode`). Identity and custom equality rules are lost on conversion. If this merges distinct source keys or elements, the constructor and `toImmutable()` throw `ArgumentError`. Otherwise the copy retains the source iteration order.
+
 ## Development
 
 Run these commands from the repository root.
