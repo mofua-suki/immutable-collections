@@ -1,3 +1,7 @@
+## 0.1.3
+
+- Add a Japanese README and document the SDK requirement and installation command.
+
 ## 0.1.2
 
 - Document compile-time errors for in-place changes to immutable collections.
