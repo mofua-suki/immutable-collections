@@ -1,10 +1,18 @@
 # Immutable Collections
 
-pub.dev でのパッケージ名は `frozen_collections` です。
+[日本語](https://github.com/mofua-suki/immutable-collections/blob/main/README.ja.md) · [pub.dev](https://pub.dev/packages/frozen_collections)
 
 Read-only snapshots of Dart lists, sets, and maps with value equality. These
 types are useful for application state, configuration, and other values that
 should stay stable when the source collection changes.
+
+## Installation
+
+Requires Dart SDK 3.14.0 or later, below 4.0.0.
+
+```sh
+dart pub add frozen_collections
+```
 
 **In-place changes to an immutable collection are compile-time errors.**
 `ImmutableList` and `ImmutableSet` expose no `add()`, `remove()`, or `clear()`
@@ -79,6 +87,12 @@ stable when using an immutable wrapper as a map key or set member.
 
 ## Development
 
-From the package root, run `dart pub get`, `dart analyze`, and `dart test`.
-Run `dart run example/main.dart` for the example and `dart doc` to generate
-the API reference.
+Run these commands from the repository root.
+
+```sh
+dart pub get
+dart analyze
+dart test
+```
+
+Run the example with `dart run example/main.dart`. Generate the API reference with `dart doc`.
