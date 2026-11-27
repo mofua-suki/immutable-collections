@@ -1,6 +1,6 @@
 name: frozen_collections
 description: Immutable snapshots of Dart lists, sets, and maps with content-based equality and helpers to convert to and from mutable collections.
-version: 0.1.5
+version: 0.1.6
 repository: https://github.com/mofua-suki/immutable-collections
 topics:
   - collections

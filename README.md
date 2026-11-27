@@ -14,10 +14,12 @@ Requires Dart SDK 3.14.0 or later, below 4.0.0.
 dart pub add frozen_collections
 ```
 
-**In-place changes to an immutable collection are compile-time errors.**
+**Direct mutation through a statically typed wrapper is a compile-time error.**
 `ImmutableList` and `ImmutableSet` expose no `add()`, `remove()`, or `clear()`
 methods, and `ImmutableMap` exposes no `remove()`, `clear()`, or `[]=` operator.
-Use `toMutable()` to make an editable copy.
+The unmodifiable collections returned by `internal` and `cast()` have standard
+Dart collection types. Calls such as `clear()` on those views throw
+`UnsupportedError` at runtime. Use `toMutable()` to make an editable copy.
 
 ## Take a snapshot and edit a copy
 

@@ -48,7 +48,9 @@ mixin _ImmutableMapMixin<K, V> {
 
   /// Returns a typed view of the unmodifiable backing map.
   ///
-  /// Accessing an entry with an incompatible key or value raises a type error.
+  /// As with [Map.cast], keys and values read as [RK] and [RV] must have
+  /// those types. The view's `operator []` accepts an `Object?` key and
+  /// passes it to the backing map without checking it against [RK].
   Map<RK, RV> cast<RK, RV>() => internal.cast();
 }
 
