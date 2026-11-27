@@ -1,5 +1,8 @@
+import "package:collection/collection.dart";
 import "package:equatable/equatable.dart";
 import "package:meta/meta.dart";
+
+import "snapshot_property.dart";
 
 /// イミュータブルなMapの振る舞いを提供するmixin
 /// 読み取り専用のメソッドのみを公開する([Map]は実装しない)
@@ -78,6 +81,19 @@ class ImmutableMap<K, V> with Equatable, _ImmutableMapMixin<K, V> {
 
   @override
   List<Object?> get props => [_internal];
+
+  Equatable _comparisonProps() =>
+      snapshotComparison(_internal, const MapEquality<Object?, Object?>(), props);
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is ImmutableMap<K, V> &&
+          runtimeType == other.runtimeType &&
+          _comparisonProps() == other._comparisonProps();
+
+  @override
+  int get hashCode => Object.hash(runtimeType, _comparisonProps());
 
   @override
   bool? get stringify => true;

@@ -69,6 +69,8 @@ mutable Dart collection with the same contents is a separate type. `hashCode`
 follows content equality, so keep the equality and hashes of contained objects
 stable when using an immutable wrapper as a map key or set member.
 
+Since 0.1.5, elements, map keys, and map values use their own Dart `==` and `hashCode`, as they do during lookup. Earlier versions could compare nested collections recursively. For example, two separately allocated Dart lists `[1]` are distinct elements. Lists containing the same list instance at every corresponding position compare equal. The public `props` list continues to expose the same collection and supports additional comparison properties in subclasses.
+
 ## Copies, views, and interoperability
 
 - Snapshots and mutable copies are **shallow**. Changes to the source
